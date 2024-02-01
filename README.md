@@ -58,3 +58,19 @@ sub domain子域名页面设置，中间件配置相关跳转
       )
     }
 ```
+prisma 配置关联数据库
+初始化prisma 数据库，这里选用mysql
+```
+bun add prisma @prisma/client
+bunx prisma init --datasource-provider mysql
+bunx prisma db push 
+bunx prisma generate
+
+Next steps:
+1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
+2. Run ‘prisma db pull’ to turn your database schema into a Prisma schema.
+3. Run ‘prisma generate’ to generate the Prisma Client. You can then start querying your database.
+
+More information in our documentation:
+https://pris.ly/d/getting-started
+```
