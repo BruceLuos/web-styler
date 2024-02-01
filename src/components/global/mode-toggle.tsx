@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { MoonIcon, SunIcon } from 'lucide-react'
 
+/** 更换主题 */
 export function ModeToggle() {
   const { setTheme } = useTheme()
 

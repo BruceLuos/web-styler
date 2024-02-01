@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-// import { pricingCards } from '@/lib/constants'
+import { pricingCards } from '@/lib/constants'
 // import { stripe } from '@/lib/stripe'
 import clsx from 'clsx'
 import { Check } from 'lucide-react'
@@ -29,7 +29,7 @@ export default async function Home() {
         <p className="text-center">Run your agency, in one place</p>
         <div className="bg-gradient-to-r from-primary to-secondary-foreground text-transparent bg-clip-text relative">
           <h1 className="text-9xl font-bold text-center md:text-[300px]">
-            Plura
+            WebS
           </h1>
         </div>
         <div className="flex justify-center items-center relative md:mt-[-70px]">
@@ -50,8 +50,8 @@ export default async function Home() {
           {" you're"} not <br />
           ready to commit you can get started for free.
         </p>
-        {/* <div className="flex  justify-center gap-4 flex-wrap mt-6">
-          {prices.data.map((card) => (
+        <div className="flex  justify-center gap-4 flex-wrap mt-6">
+          {/* {prices.data.map((card) => (
             //WIP: Wire up free product from stripe
             <Card
               key={card.nickname}
@@ -110,7 +110,7 @@ export default async function Home() {
                 </Link>
               </CardFooter>
             </Card>
-          ))}
+          ))} */}
           <Card className={clsx('w-[300px] flex flex-col justify-between')}>
             <CardHeader>
               <CardTitle
@@ -153,7 +153,7 @@ export default async function Home() {
               </Link>
             </CardFooter>
           </Card>
-        </div> */}
+        </div>
       </section>
     </>
   )
