@@ -403,7 +403,7 @@ const AgencyDetails = ({ data }: Props) => {
                     ✨ Create a goal for your agency. As your business grows
                     your goals grow too so dont forget to set the bar higher!
                   </FormDescription>
-                  <NumberInput
+                  {/* <NumberInput
                     defaultValue={data?.goal}
                     onValueChange={async (val) => {
                       if (!data?.id) return
@@ -418,7 +418,7 @@ const AgencyDetails = ({ data }: Props) => {
                     min={1}
                     className="bg-background !border !border-input"
                     placeholder="Sub Account Goal"
-                  />
+                  /> */}
                 </div>
               )}
               <Button

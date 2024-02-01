@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server'
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
-  publicRoutes: ['/site', '/api/uploadthing'],
+  publicRoutes: ['/site', '/api/uploadthing'], // 校验白名单
   async beforeAuth(auth, req) {},
   async afterAuth(auth, req) {
     //rewrite for domains
@@ -30,7 +30,7 @@ export default authMiddleware({
     }
 
     if (url.pathname === '/sign-in' || url.pathname === '/sign-up') {
-      return NextResponse.redirect(new URL(`/agency/sign-in`, req.url))
+      return NextResponse.redirect(new URL(`/agency/sign-in`, req.url)) // 跳到真正的登录页面
     }
 
     if (

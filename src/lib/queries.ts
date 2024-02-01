@@ -23,6 +23,7 @@ import {
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
 
+/** 获取用户信息 */
 export const getAuthUserDetails = async () => {
   const user = await currentUser()
   if (!user) {
@@ -142,6 +143,7 @@ export const createTeamUser = async (agencyId: string, user: User) => {
   return response
 }
 
+/** 验证并接收机构邀请 */
 export const verifyAndAcceptInvitation = async () => {
   const user = await currentUser()
   if (!user) return redirect('/sign-in')

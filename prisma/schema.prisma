@@ -58,12 +58,12 @@ model User {
   email        String         @unique
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  role         Role           @default(SUBACCOUNT_USER)
+  role         Role           @default(SUBACCOUNT_USER) // 用户角色
   agencyId     String?
-  Agency       Agency?        @relation(fields: [agencyId], references: [id], onDelete: Cascade)
-  Permissions  Permissions[]
+  Agency       Agency?        @relation(fields: [agencyId], references: [id], onDelete: Cascade) // 机构
+  Permissions  Permissions[] // 权限
   Ticket       Ticket[]
-  Notification Notification[]
+  Notification Notification[] // 通知
 
   @@index([agencyId])
 }
