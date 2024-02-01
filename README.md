@@ -42,3 +42,9 @@ bunx create-next-app@latest .
 bunx --bun shadcn-ui@latest init add
 
 ```
+
+```
+bun add uploadthing @uploadthing/react
+npm install @clerk/nextjs
+npm install @clerk/themes
+```
