@@ -83,7 +83,7 @@ model Permissions {
 model Agency {
   id               String                @id @default(uuid())
   connectAccountId String?               @default("")
-  customerId       String                @default("")
+  customerId       String                @default("") // 顾客id,stripe
   name             String
   agencyLogo       String                @db.Text
   companyEmail     String                @db.Text

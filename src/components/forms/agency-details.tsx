@@ -122,6 +122,7 @@ const AgencyDetails = ({ data }: Props) => {
           },
         }
 
+        // 创建stripe customer
         const customerResponse = await fetch('/api/stripe/create-customer', {
           method: 'POST',
           headers: {
@@ -133,10 +134,11 @@ const AgencyDetails = ({ data }: Props) => {
           await customerResponse.json()
         custId = customerData.customerId
       }
-
+      // 创建新用户
       newUserData = await initUser({ role: 'AGENCY_OWNER' })
       if (!data?.customerId && !custId) return
 
+      // 创建机构
       const response = await upsertAgency({
         id: data?.id ? data.id : v4(),
         customerId: data?.customerId || custId || '',
@@ -171,6 +173,7 @@ const AgencyDetails = ({ data }: Props) => {
       })
     }
   }
+  
   const handleDeleteAgency = async () => {
     if (!data?.id) return
     setDeletingAgency(true)

@@ -210,10 +210,11 @@ export const deleteAgency = async (agencyId: string) => {
   return response
 }
 
+/** 创建用户 */
 export const initUser = async (newUser: Partial<User>) => {
   const user = await currentUser()
   if (!user) return
-
+  // 往数据库插入用户
   const userData = await db.user.upsert({
     where: {
       email: user.emailAddresses[0].emailAddress,
@@ -228,6 +229,7 @@ export const initUser = async (newUser: Partial<User>) => {
     },
   })
 
+  // clerk客户端更新用户信息
   await clerkClient.users.updateUserMetadata(user.id, {
     privateMetadata: {
       role: newUser.role || 'SUBACCOUNT_USER',
@@ -236,7 +238,7 @@ export const initUser = async (newUser: Partial<User>) => {
 
   return userData
 }
-
+// 机构创建
 export const upsertAgency = async (agency: Agency, price?: Plan) => {
   if (!agency.companyEmail) return null
   try {
