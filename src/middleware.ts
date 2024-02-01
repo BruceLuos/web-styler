@@ -17,7 +17,7 @@ export default authMiddleware({
       searchParams.length > 0 ? `?${searchParams}` : ''
     }`
 
-    //if subdomain exists
+    // 子域名存在的时候
     const customSubDomain = hostname
       .get('host')
       ?.split(`${process.env.NEXT_PUBLIC_DOMAIN}`)
@@ -25,7 +25,7 @@ export default authMiddleware({
 
     if (customSubDomain) {
       return NextResponse.rewrite(
-        new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url)
+        new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url) // 子域名存在的时候，会走[domain]/[path]
       )
     }
 

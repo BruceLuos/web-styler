@@ -42,9 +42,19 @@ bunx create-next-app@latest .
 bunx --bun shadcn-ui@latest init add
 
 ```
-
+资源上传，权限校验，主题配置
 ```
 bun add uploadthing @uploadthing/react
 npm install @clerk/nextjs
 npm install @clerk/themes
+```
+sub domain子域名页面设置，中间件配置相关跳转
+```
+[domain]/[path]
+
+  if (customSubDomain) {
+      return NextResponse.rewrite(
+        new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url) // 子域名存在的时候，会走[domain]/[path]
+      )
+    }
 ```
