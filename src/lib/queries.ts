@@ -252,6 +252,7 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
           connect: { email: agency.companyEmail },
         },
         ...agency,
+        // 机构侧边栏选项初始化
         SidebarOption: {
           create: [
             {
