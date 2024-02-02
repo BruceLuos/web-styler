@@ -14,6 +14,7 @@ const Sidebar = async ({ id, type }: Props) => {
 
   if (!user.Agency) return
 
+  /** 获取机构或者子账号的详细信息 */
   const details =
     type === 'agency'
       ? user?.Agency
@@ -24,6 +25,7 @@ const Sidebar = async ({ id, type }: Props) => {
 
   let sideBarLogo = user.Agency.agencyLogo || '/assets/plura-logo.svg'
 
+  // 如果不是白标机构，则获取子账号的logo
   if (!isWhiteLabeledAgency) {
     if (type === 'subaccount') {
       sideBarLogo =
@@ -56,6 +58,7 @@ const Sidebar = async ({ id, type }: Props) => {
         subAccounts={subaccounts}
         user={user}
       />
+      {/* 移动端menu */}
       <MenuOptions
         details={details}
         id={id}

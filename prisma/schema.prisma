@@ -88,7 +88,7 @@ model Agency {
   agencyLogo       String                @db.Text
   companyEmail     String                @db.Text
   companyPhone     String
-  whiteLabel       Boolean               @default(true)
+  whiteLabel       Boolean               @default(true)  // 属于白标产品
   address          String
   city             String
   zipCode          String

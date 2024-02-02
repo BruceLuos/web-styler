@@ -49,7 +49,9 @@ const sheetVariants = cva(
   }
 )
 
+/** 自定义sheetContent属性 */
 interface CustomSheetContentProps {
+  /** 显示X标识 */
   showX?: boolean
 }
 

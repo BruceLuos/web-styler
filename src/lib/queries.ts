@@ -295,6 +295,7 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
   }
 }
 
+/** 获取通知信息和用户数据 */
 export const getNotificationAndUser = async (agencyId: string) => {
   try {
     const response = await db.notification.findMany({
