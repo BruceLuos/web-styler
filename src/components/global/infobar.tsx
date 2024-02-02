@@ -25,6 +25,7 @@ type Props = {
   subAccountId?: string
 }
 
+/** 通知栏 */
 const InfoBar = ({ notifications, subAccountId, className, role }: Props) => {
   const [allNotifications, setAllNotifications] = useState(notifications)
   const [showAll, setShowAll] = useState(true)

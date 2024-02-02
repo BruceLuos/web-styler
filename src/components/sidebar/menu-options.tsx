@@ -49,6 +49,7 @@ const MenuOptions = ({
   user,
   defaultOpen,
 }: Props) => {
+  /** useModal hook is used to open and close the modal */
   const { setOpen } = useModal()
   const [isMounted, setIsMounted] = useState(false)
 
@@ -237,6 +238,7 @@ const MenuOptions = ({
                     <Button
                       className="w-full flex gap-2"
                       onClick={() => {
+                        // 创建子账号
                         setOpen(
                           <CustomModal
                             title="Create A Subaccount"
@@ -259,6 +261,7 @@ const MenuOptions = ({
               </Command>
             </PopoverContent>
           </Popover>
+          {/* 菜单选项 */}
           <p className="text-muted-foreground text-xs mb-2">MENU LINKS</p>
           <Separator className="mb-4" />
           <nav className="relative">
