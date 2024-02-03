@@ -448,6 +448,7 @@ export const getSubaccountDetails = async (subaccountId: string) => {
   return response
 }
 
+/** 删除子账号 */
 export const deleteSubAccount = async (subaccountId: string) => {
   const response = await db.subAccount.delete({
     where: {
