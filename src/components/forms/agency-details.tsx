@@ -67,6 +67,7 @@ const FormSchema = z.object({
   agencyLogo: z.string().min(1),
 });
 
+/** 机构详情表单 */
 const AgencyDetails = ({ data }: Props) => {
   const { toast } = useToast();
   const router = useRouter();
@@ -385,14 +386,14 @@ const AgencyDetails = ({ data }: Props) => {
                   <NumberInput
                     defaultValue={data?.goal}
                     onValueChange={async (val) => {
-                      if (!data?.id) return
-                      await updateAgencyDetails(data.id, { goal: val })
+                      if (!data?.id) return;
+                      await updateAgencyDetails(data.id, { goal: val });
                       await saveActivityLogsNotification({
                         agencyId: data.id,
                         description: `Updated the agency goal to | ${val} Sub Account`,
                         subaccountId: undefined,
-                      })
-                      router.refresh()
+                      });
+                      router.refresh();
                     }}
                     min={1}
                     className="bg-background !border !border-input"
