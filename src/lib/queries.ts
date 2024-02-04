@@ -516,6 +516,7 @@ export const getMedia = async (subaccountId: string) => {
   return mediafiles
 }
 
+/** 创建子账号中媒体资源 */
 export const createMedia = async (
   subaccountId: string,
   mediaFile: CreateMediaType
@@ -531,6 +532,7 @@ export const createMedia = async (
   return response
 }
 
+/** 删除媒体资源 */
 export const deleteMedia = async (mediaId: string) => {
   const response = await db.media.delete({
     where: {

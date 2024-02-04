@@ -30,10 +30,13 @@ type Props = {
 }
 
 const formSchema = z.object({
+  /** 资源链接 */
   link: z.string().min(1, { message: 'Media File is required' }),
+  /** 文件名 */
   name: z.string().min(1, { message: 'Name is required' }),
 })
 
+/** 上传媒体资源表单 */
 const UploadMediaForm = ({ subaccountId }: Props) => {
   const { toast } = useToast()
   const router = useRouter()

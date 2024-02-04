@@ -28,6 +28,7 @@ import { toast } from '../ui/use-toast'
 
 type Props = { file: Media }
 
+/** 媒体资源显示卡片 */
 const MediaCard = ({ file }: Props) => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()

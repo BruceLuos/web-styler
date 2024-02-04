@@ -13,10 +13,11 @@ import MediaCard from './media-card'
 import { FolderSearch } from 'lucide-react'
 
 type Props = {
+  /** 媒体资源文件 */
   data: GetMediaFiles
   subaccountId: string
 }
-
+/** 媒体资源 */
 const MediaComponent = ({ data, subaccountId }: Props) => {
   return (
     <div className="flex flex-col gap-4 h-full w-full">
@@ -30,6 +31,7 @@ const MediaComponent = ({ data, subaccountId }: Props) => {
           <CommandEmpty>No Media Files</CommandEmpty>
           <CommandGroup heading="Media Files">
             <div className="flex flex-wrap gap-4 pt-4">
+              {/* 有资源时显示 */}
               {data?.Media.map((file) => (
                 <CommandItem
                   key={file.id}
@@ -38,6 +40,7 @@ const MediaComponent = ({ data, subaccountId }: Props) => {
                   <MediaCard file={file} />
                 </CommandItem>
               ))}
+              {/* 没资源时显示 */}
               {!data?.Media.length && (
                 <div className="flex items-center justify-center w-full flex-col">
                   <FolderSearch
