@@ -479,6 +479,7 @@ export const getUser = async (id: string) => {
   return user
 }
 
+/** 发送邀请 */
 export const sendInvitation = async (
   role: Role,
   email: string,

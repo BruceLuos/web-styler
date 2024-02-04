@@ -46,6 +46,7 @@ export const FunnelPageSchema = z.object({
   pathName: z.string().optional(),
 })
 
+/** 获取用户有机构并有子账号权限的sidebar选项数据 */
 const __getUsersWithAgencySubAccountPermissionsSidebarOptions = async (
   agencyId: string
 ) => {
