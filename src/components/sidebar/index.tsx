@@ -5,10 +5,11 @@ import MenuOptions from "./menu-options";
 
 type Props = {
   id: string;
+  /** 机构侧边栏或子账号侧边栏 */
   type: "agency" | "subaccount";
 };
 
-/** 侧边栏 */
+/** 侧边栏（机构或子账号） */
 const Sidebar = async ({ id, type }: Props) => {
   const user = await getAuthUserDetails();
   if (!user) return null;

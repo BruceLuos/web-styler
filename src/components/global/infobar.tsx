@@ -30,6 +30,7 @@ const InfoBar = ({ notifications, subAccountId, className, role }: Props) => {
   const [allNotifications, setAllNotifications] = useState(notifications)
   const [showAll, setShowAll] = useState(true)
 
+  /** 切换显示通知 */
   const handleClick = () => {
     if (!showAll) {
       setAllNotifications(notifications)
