@@ -79,3 +79,7 @@ https://pris.ly/d/getting-started
 bun add @tanstack/react-table
 
 ```
+
+```
+bun add react-beautiful-dnd
+```
