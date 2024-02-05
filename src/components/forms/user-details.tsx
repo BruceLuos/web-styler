@@ -72,7 +72,6 @@ const UserDetails = ({ id, type, subAccounts, userData }: Props) => {
   const { toast } = useToast();
   const router = useRouter();
 
-  //Get authUSerDtails
 
   useEffect(() => {
     console.log("从全局modal中拿到的data", data);
