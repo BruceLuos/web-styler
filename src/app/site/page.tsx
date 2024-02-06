@@ -5,17 +5,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { pricingCards } from '@/lib/constants'
+} from "@/components/ui/card";
+import { pricingCards } from "@/lib/constants";
 // import { stripe } from '@/lib/stripe'
-import clsx from 'clsx'
-import { Check } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
+import clsx from "clsx";
+import { Check } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
   // const prices = await stripe.prices.list({
-  //   product: process.env.NEXT_PLURA_PRODUCT_ID,
+  //   product: process.env.NEXT_WEBSTYLER_PRODUCT_ID,
   //   active: true,
   // })
 
@@ -34,7 +34,7 @@ export default async function Home() {
         </div>
         <div className="flex justify-center items-center relative md:mt-[-70px]">
           <Image
-            src={'/assets/preview.png'}
+            src={"/assets/preview.png"}
             alt="banner image"
             height={1200}
             width={1200}
@@ -111,11 +111,11 @@ export default async function Home() {
               </CardFooter>
             </Card>
           ))} */}
-          <Card className={clsx('w-[300px] flex flex-col justify-between')}>
+          <Card className={clsx("w-[300px] flex flex-col justify-between")}>
             <CardHeader>
               <CardTitle
                 className={clsx({
-                  'text-muted-foreground': true,
+                  "text-muted-foreground": true,
                 })}
               >
                 {pricingCards[0].title}
@@ -129,12 +129,9 @@ export default async function Home() {
             <CardFooter className="flex flex-col  items-start gap-4 ">
               <div>
                 {pricingCards
-                  .find((c) => c.title === 'Starter')
+                  .find((c) => c.title === "Starter")
                   ?.features.map((feature) => (
-                    <div
-                      key={feature}
-                      className="flex gap-2"
-                    >
+                    <div key={feature} className="flex gap-2">
                       <Check />
                       <p>{feature}</p>
                     </div>
@@ -143,9 +140,9 @@ export default async function Home() {
               <Link
                 href="/agency"
                 className={clsx(
-                  'w-full text-center bg-primary p-2 rounded-md',
+                  "w-full text-center bg-primary p-2 rounded-md",
                   {
-                    '!bg-muted-foreground': true,
+                    "!bg-muted-foreground": true,
                   }
                 )}
               >
@@ -156,5 +153,5 @@ export default async function Home() {
         </div>
       </section>
     </>
-  )
+  );
 }
