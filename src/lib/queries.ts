@@ -738,6 +738,7 @@ export const searchContacts = async (searchTerms: string) => {
   return response
 }
 
+/** 新增子任务 */
 export const upsertTicket = async (
   ticket: Prisma.TicketUncheckedCreateInput,
   tags: Tag[]
@@ -769,6 +770,7 @@ export const upsertTicket = async (
   return response
 }
 
+/** 删除子任务 */
 export const deleteTicket = async (ticketId: string) => {
   const response = await db.ticket.delete({
     where: {
@@ -805,6 +807,7 @@ export const deleteTag = async (tagId: string) => {
   return response
 }
 
+/** 插入新联系人 */
 export const upsertContact = async (
   contact: Prisma.ContactUncheckedCreateInput
 ) => {
