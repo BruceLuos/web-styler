@@ -124,7 +124,7 @@ const AgencyDetails = ({ data }: Props) => {
           },
         };
 
-        // 创建stripe customer
+        // 创建机构关联stripe的customer
         const customerResponse = await fetch("/api/stripe/create-customer", {
           method: "POST",
           headers: {

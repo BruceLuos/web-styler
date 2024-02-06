@@ -83,3 +83,10 @@ bun add @tanstack/react-table
 ```
 bun add react-beautiful-dnd
 ```
+
+stripe支付
+```
+bun add stripe
+bun add @stripe/stripe-js     
+bun add @stripe/react-stripe-js
+```

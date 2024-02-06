@@ -3,6 +3,7 @@ import Stripe from 'stripe'
 import { db } from '../db'
 import { stripe } from '.'
 
+/** 订阅创建 */
 export const subscriptionCreated = async (
   subscription: Stripe.Subscription,
   customerId: string
@@ -45,6 +46,7 @@ export const subscriptionCreated = async (
   }
 }
 
+/** 获取关联stripe的账号信息 */
 export const getConnectAccountProducts = async (stripeAccount: string) => {
   const products = await stripe.products.list(
     {

@@ -238,7 +238,7 @@ export const initUser = async (newUser: Partial<User>) => {
 
   return userData
 }
-// 机构创建
+// 机构创建，插入数据库
 export const upsertAgency = async (agency: Agency, price?: Plan) => {
   if (!agency.companyEmail) return null
   try {
@@ -342,6 +342,7 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
       Pipeline: {
         create: { name: 'Lead Cycle' },
       },
+      // 子账号侧边栏路由初始化
       SidebarOption: {
         create: [
           {

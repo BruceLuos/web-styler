@@ -42,6 +42,7 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
   useEffect(() => {
     if (!selectedPriceId) return
     const createSecret = async () => {
+      /** 创建收费订阅*/
       const subscriptionResponse = await fetch(
         '/api/stripe/create-subscription',
         {
