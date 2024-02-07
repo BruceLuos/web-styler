@@ -57,8 +57,9 @@ export const pricingCards = [
   },
 ]
 
+/** 优先处理的一个产品 */
 export const addOnProducts = [
-  { title: 'Priority Support', id: 'prod_PNjJAE2EpP16pn' },
+  { title: 'Priority Support', id: 'prod_PVmbXEt5cSE40s' },
 ]
 
 export const icons = [

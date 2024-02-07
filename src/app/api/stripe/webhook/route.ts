@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { subscriptionCreated } from '@/lib/stripe/stripe-actions'
 
+/** stripe webhooks 监听事件列表 */
 const stripeWebhookEvents = new Set([
   'product.created',
   'product.updated',
@@ -16,6 +17,7 @@ const stripeWebhookEvents = new Set([
 ])
 
 export async function POST(req: NextRequest) {
+  console.log('进入stripe webhook 监听')
   let stripeEvent: Stripe.Event
   const body = await req.text()
   const sig = headers().get('Stripe-Signature')

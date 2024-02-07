@@ -1,77 +1,79 @@
-'use client'
-import { Card, CardHeader, CardTitle } from '@/components/ui/card'
-import { toast } from '@/components/ui/use-toast'
-import { pricingCards } from '@/lib/constants'
-import { useModal } from '@/providers/modal-provider'
-import { Plan } from '@prisma/client'
-import { StripeElementsOptions } from '@stripe/stripe-js'
-import clsx from 'clsx'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useMemo, useState } from 'react'
-import { Elements } from '@stripe/react-stripe-js'
-import { getStripe } from '@/lib/stripe/stripe-client'
-import Loading from '@/components/global/loading'
-import SubscriptionForm from '.'
+"use client";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "@/components/ui/use-toast";
+import { pricingCards } from "@/lib/constants";
+import { useModal } from "@/providers/modal-provider";
+import { Plan } from "@prisma/client";
+import { StripeElementsOptions } from "@stripe/stripe-js";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useMemo, useState } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { getStripe } from "@/lib/stripe/stripe-client";
+import Loading from "@/components/global/loading";
+import SubscriptionForm from ".";
 
 type Props = {
-  customerId: string
-  planExists: boolean
-}
+  customerId: string;
+  planExists: boolean;
+};
 
+/** 订阅管理wrapper */
 const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
-  const { data, setClose } = useModal()
-  const router = useRouter()
-  const [selectedPriceId, setSelectedPriceId] = useState<Plan | ''>(
-    data?.plans?.defaultPriceId || ''
-  )
+  const { data, setClose } = useModal();
+  const router = useRouter();
+  const [selectedPriceId, setSelectedPriceId] = useState<Plan | "">(
+    data?.plans?.defaultPriceId || ""
+  );
   const [subscription, setSubscription] = useState<{
-    subscriptionId: string
-    clientSecret: string
-  }>({ subscriptionId: '', clientSecret: '' })
+    subscriptionId: string;
+    clientSecret: string;
+  }>({ subscriptionId: "", clientSecret: "" });
 
+  /** stripe 的付费需要用到的客户端密钥 */
   const options: StripeElementsOptions = useMemo(
     () => ({
       clientSecret: subscription?.clientSecret,
       appearance: {
-        theme: 'flat',
+        theme: "flat",
       },
     }),
     [subscription]
-  )
+  );
 
   useEffect(() => {
-    if (!selectedPriceId) return
+    if (!selectedPriceId) return;
     const createSecret = async () => {
       /** 创建收费订阅*/
       const subscriptionResponse = await fetch(
-        '/api/stripe/create-subscription',
+        "/api/stripe/create-subscription",
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             customerId,
             priceId: selectedPriceId,
           }),
         }
-      )
-      const subscriptionResponseData = await subscriptionResponse.json()
+      );
+      const subscriptionResponseData = await subscriptionResponse.json();
       setSubscription({
         clientSecret: subscriptionResponseData.clientSecret,
         subscriptionId: subscriptionResponseData.subscriptionId,
-      })
+      });
       if (planExists) {
         toast({
-          title: 'Success',
-          description: 'Your plan has been successfully upgraded!',
-        })
-        setClose()
-        router.refresh()
+          title: "Success",
+          description: "Your plan has been successfully upgraded!",
+        });
+        setClose();
+        router.refresh();
       }
-    }
-    createSecret()
-  }, [data, selectedPriceId, customerId])
+    };
+    createSecret();
+  }, [data, selectedPriceId, customerId]);
 
   return (
     <div className="border-none transition-all">
@@ -80,13 +82,13 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
           <Card
             onClick={() => setSelectedPriceId(price.id as Plan)}
             key={price.id}
-            className={clsx('relative cursor-pointer transition-all', {
-              'border-primary': selectedPriceId === price.id,
+            className={clsx("relative cursor-pointer transition-all", {
+              "border-primary": selectedPriceId === price.id,
             })}
           >
             <CardHeader>
               <CardTitle>
-                ${price.unit_amount ? price.unit_amount / 100 : '0'}
+                ${price.unit_amount ? price.unit_amount / 100 : "0"}
                 <p className="text-sm text-muted-foreground">
                   {price.nickname}
                 </p>
@@ -103,14 +105,11 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
             )}
           </Card>
         ))}
-
+        {/* 付款元素使用的 PaymentIntent 或 SetupIntent 的客户端密钥。 */}
         {options.clientSecret && !planExists && (
           <>
             <h1 className="text-xl">Payment Method</h1>
-            <Elements
-              stripe={getStripe()}
-              options={options}
-            >
+            <Elements stripe={getStripe()} options={options}>
               <SubscriptionForm selectedPriceId={selectedPriceId} />
             </Elements>
           </>
@@ -123,7 +122,7 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SubscriptionFormWrapper
+export default SubscriptionFormWrapper;

@@ -90,3 +90,13 @@ bun add stripe
 bun add @stripe/stripe-js     
 bun add @stripe/react-stripe-js
 ```
+
+stripe webhook监听支付等事件,本地测试
+https://dashboard.stripe.com/test/webhooks/create?endpoint_location=local
+```
+brew install stripe/stripe-cli/stripe
+stripe login
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+stripe trigger payment_intent.succeeded
+
+```
