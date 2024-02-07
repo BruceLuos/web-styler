@@ -41,6 +41,7 @@ const LaunchPadPage = async ({ params, searchParams }: Props) => {
     agencyDetails.state &&
     agencyDetails.zipCode;
 
+  /** 获取stripe账号关联链接 */
   const stripeOAuthLink = getStripeOAuthLink(
     "agency",
     `launchpad___${agencyDetails.id}`
@@ -49,6 +50,7 @@ const LaunchPadPage = async ({ params, searchParams }: Props) => {
   let connectedStripeAccount = false;
 
   // 校验stripe授权情况，并关联机构账号
+  // 关联后可通过查看stripe账号详情
   if (searchParams.code) {
     if (!agencyDetails.connectAccountId) {
       try {
