@@ -46,6 +46,7 @@ const LaunchPad = async ({ params, searchParams }: Props) => {
     subaccountDetails.name &&
     subaccountDetails.state;
 
+  /** 子账号关联stripe账号 */
   const stripeOAuthLink = getStripeOAuthLink(
     "subaccount",
     `launchpad___${subaccountDetails.id}`
