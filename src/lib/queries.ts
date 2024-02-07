@@ -820,6 +820,7 @@ export const upsertContact = async (
   return response
 }
 
+/** 查找所有项目进程 */
 export const getFunnels = async (subacountId: string) => {
   const funnels = await db.funnel.findMany({
     where: { subAccountId: subacountId },
@@ -829,6 +830,7 @@ export const getFunnels = async (subacountId: string) => {
   return funnels
 }
 
+/** 查找指定id的项目进程 */
 export const getFunnel = async (funnelId: string) => {
   const funnel = await db.funnel.findUnique({
     where: { id: funnelId },

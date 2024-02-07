@@ -32,8 +32,7 @@ interface CreateFunnelProps {
   subAccountId: string
 }
 
-//CHALLENGE: Use favicons
-
+/** 项目流程创建表单 */
 const FunnelForm: React.FC<CreateFunnelProps> = ({
   defaultData,
   subAccountId,
