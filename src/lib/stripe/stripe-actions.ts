@@ -46,7 +46,7 @@ export const subscriptionCreated = async (
   }
 }
 
-/** 获取关联stripe的账号信息 */
+/** 获取关联stripe的账号商品信息 */
 export const getConnectAccountProducts = async (stripeAccount: string) => {
   const products = await stripe.products.list(
     {

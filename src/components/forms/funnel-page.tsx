@@ -1,13 +1,13 @@
-'use client'
-import React, { useEffect } from 'react'
-import { z } from 'zod'
+"use client";
+import React, { useEffect } from "react";
+import { z } from "zod";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '../ui/card'
+} from "../ui/card";
 import {
   Form,
   FormControl,
@@ -15,63 +15,64 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Input } from '../ui/input'
+} from "../ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "../ui/input";
 
-import { Button } from '../ui/button'
-import Loading from '../global/loading'
-import { useToast } from '../ui/use-toast'
-import { FunnelPage } from '@prisma/client'
-import { FunnelPageSchema } from '@/lib/types'
+import { Button } from "../ui/button";
+import Loading from "../global/loading";
+import { useToast } from "../ui/use-toast";
+import { FunnelPage } from "@prisma/client";
+import { FunnelPageSchema } from "@/lib/types";
 import {
   deleteFunnelePage,
   getFunnels,
   saveActivityLogsNotification,
   upsertFunnelPage,
-} from '@/lib/queries'
-import { useRouter } from 'next/navigation'
-import { v4 } from 'uuid'
-import { CopyPlusIcon, Trash } from 'lucide-react'
+} from "@/lib/queries";
+import { useRouter } from "next/navigation";
+import { v4 } from "uuid";
+import { CopyPlusIcon, Trash } from "lucide-react";
 
 interface CreateFunnelPageProps {
-  defaultData?: FunnelPage
-  funnelId: string
-  order: number
-  subaccountId: string
+  defaultData?: FunnelPage;
+  funnelId: string;
+  order: number;
+  subaccountId: string;
 }
 
+/** 编辑或创建funnel page */
 const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
   defaultData,
   funnelId,
   order,
   subaccountId,
 }) => {
-  const { toast } = useToast()
-  const router = useRouter()
+  const { toast } = useToast();
+  const router = useRouter();
   //ch
   const form = useForm<z.infer<typeof FunnelPageSchema>>({
     resolver: zodResolver(FunnelPageSchema),
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: {
-      name: '',
-      pathName: '',
+      name: "",
+      pathName: "",
     },
-  })
+  });
 
   useEffect(() => {
     if (defaultData) {
-      form.reset({ name: defaultData.name, pathName: defaultData.pathName })
+      form.reset({ name: defaultData.name, pathName: defaultData.pathName });
     }
-  }, [defaultData])
+  }, [defaultData]);
 
   const onSubmit = async (values: z.infer<typeof FunnelPageSchema>) => {
     if (order !== 0 && !values.pathName)
-      return form.setError('pathName', {
+      return form.setError("pathName", {
         message:
           "Pages other than the first page in the funnel require a path name example 'secondstep'.",
-      })
+      });
     try {
       const response = await upsertFunnelPage(
         subaccountId,
@@ -79,31 +80,31 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
           ...values,
           id: defaultData?.id || v4(),
           order: defaultData?.order || order,
-          pathName: values.pathName || '',
+          pathName: values.pathName || "",
         },
         funnelId
-      )
+      );
 
       await saveActivityLogsNotification({
         agencyId: undefined,
         description: `Updated a funnel page | ${response?.name}`,
         subaccountId: subaccountId,
-      })
+      });
 
       toast({
-        title: 'Success',
-        description: 'Saves Funnel Page Details',
-      })
-      router.refresh()
+        title: "Success",
+        description: "Saves Funnel Page Details",
+      });
+      router.refresh();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
-        variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could Save Funnel Page Details',
-      })
+        variant: "destructive",
+        title: "Oppse!",
+        description: "Could Save Funnel Page Details",
+      });
     }
-  }
+  };
 
   return (
     <Card>
@@ -128,17 +129,14 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
                 <FormItem className="flex-1">
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Name"
-                      {...field}
-                    />
+                    <Input placeholder="Name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-              disabled={form.formState.isSubmitting || order === 0}
+              disabled={form.formState.isSubmitting || order === 0} // order为0表示是第一个页面,不需要pathname
               control={form.control}
               name="pathName"
               render={({ field }) => (
@@ -156,44 +154,46 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
               )}
             />
             <div className="flex items-center gap-2">
+              {/* 保存funnel page */}
               <Button
                 className="w-22 self-end"
                 disabled={form.formState.isSubmitting}
                 type="submit"
               >
-                {form.formState.isSubmitting ? <Loading /> : 'Save Page'}
+                {form.formState.isSubmitting ? <Loading /> : "Save Page"}
               </Button>
-
+              {/* 删除funnel page */}
               {defaultData?.id && (
                 <Button
-                  variant={'outline'}
+                  variant={"outline"}
                   className="w-22 self-end border-destructive text-destructive hover:bg-destructive"
                   disabled={form.formState.isSubmitting}
                   type="button"
                   onClick={async () => {
-                    const response = await deleteFunnelePage(defaultData.id)
+                    const response = await deleteFunnelePage(defaultData.id);
                     await saveActivityLogsNotification({
                       agencyId: undefined,
                       description: `Deleted a funnel page | ${response?.name}`,
                       subaccountId: subaccountId,
-                    })
-                    router.refresh()
+                    });
+                    router.refresh();
                   }}
                 >
                   {form.formState.isSubmitting ? <Loading /> : <Trash />}
                 </Button>
               )}
+              {/* 复制当前funnel page */}
               {defaultData?.id && (
                 <Button
-                  variant={'outline'}
-                  size={'icon'}
+                  variant={"outline"}
+                  size={"icon"}
                   disabled={form.formState.isSubmitting}
                   type="button"
                   onClick={async () => {
-                    const response = await getFunnels(subaccountId)
+                    const response = await getFunnels(subaccountId);
                     const lastFunnelPage = response.find(
                       (funnel) => funnel.id === funnelId
-                    )?.FunnelPages.length
+                    )?.FunnelPages.length;
 
                     await upsertFunnelPage(
                       subaccountId,
@@ -207,12 +207,12 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
                         content: defaultData.content,
                       },
                       funnelId
-                    )
+                    );
                     toast({
-                      title: 'Success',
-                      description: 'Saves Funnel Page Details',
-                    })
-                    router.refresh()
+                      title: "Success",
+                      description: "Saves Funnel Page Details",
+                    });
+                    router.refresh();
                   }}
                 >
                   {form.formState.isSubmitting ? <Loading /> : <CopyPlusIcon />}
@@ -223,7 +223,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
         </Form>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default CreateFunnelPage
+export default CreateFunnelPage;
