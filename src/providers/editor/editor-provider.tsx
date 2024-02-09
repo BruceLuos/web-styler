@@ -414,6 +414,7 @@ const EditorProvider = (props: EditorProps) => {
   );
 };
 
+/** 编辑器全局状态获取 */
 export const useEditor = () => {
   const context = useContext(EditorContext);
   if (!context) {
