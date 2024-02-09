@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import FunnelEditorNavigation from "./_components/funnel-editor-navigation";
 import FunnelEditorSidebar from "./_components/funnel-editor-sidebar";
-// import FunnelEditor from "./_components/funnel-editor";
+import FunnelEditor from "./_components/funnel-editor";
 
 /**
  * @funnelId 当前项目流程id
@@ -44,7 +44,7 @@ const Page = async ({ params }: Props) => {
           subaccountId={params.subaccountId}
         />
         <div className="h-full flex justify-center">
-          {/* <FunnelEditor funnelPageId={params.funnelPageId} /> */}
+          <FunnelEditor funnelPageId={params.funnelPageId} />
         </div>
 
         <FunnelEditorSidebar subaccountId={params.subaccountId} />
