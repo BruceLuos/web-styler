@@ -5,6 +5,7 @@ import { EditorElement, useEditor } from "@/providers/editor/editor-provider";
 import clsx from "clsx";
 import { Trash } from "lucide-react";
 import React from "react";
+import { findElement, findElementIndex } from "../../../../utils";
 
 type Props = {
   element: EditorElement;
@@ -17,6 +18,50 @@ const VideoComponent = (props: Props) => {
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);
+    console.log("video组件内部的拖拽事件", type);
+
+    const currentElements = state.editor.elements[0].content as EditorElement[];
+    // const currentElementsIndex = currentElements.indexOf(props.element);
+    const currentElementsIndex = findElementIndex(
+      currentElements,
+      props.element
+    );
+    const currentElement = findElement(currentElements, currentElementsIndex);
+
+    e.dataTransfer.setData("dragElementIndex", currentElementsIndex.toString());
+    console.log(currentElements, currentElementsIndex);
+  };
+
+
+  const handleOnDrop = (e: React.DragEvent, type: EditorBtns) => {
+    e.stopPropagation();
+    console.log("contact-from组件内部的拖拽放下事件", type);
+    const currentElements = state.editor.elements[0].content as EditorElement[];
+    // const currentElementsIndex = currentElements.indexOf(props.element);
+    const currentElementsIndex = findElementIndex(
+      currentElements,
+      props.element
+    );
+
+    let currentElement = findElement(currentElements, currentElementsIndex);
+
+    console.log(currentElements, currentElementsIndex);
+    console.log("dragElementIdx", e.dataTransfer.getData("dragElementIndex"));
+    const dragElementIndex = parseInt(
+      e.dataTransfer.getData("dragElementIndex")
+    );
+
+    // dispatch({
+    //   type: "UPDATE_ELEMENT_INDEX",
+    //   payload: {
+    //     elementId: props.element.id,
+    //     targetIndex: dragElementIndex,
+    //   },
+    // });
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
   };
 
   const handleOnClick = (e: React.MouseEvent) => {
@@ -41,6 +86,8 @@ const VideoComponent = (props: Props) => {
       style={styles}
       draggable
       onDragStart={(e) => handleDragStart(e, "video")}
+      onDragOver={handleDragOver}
+      onDrop={(e) => handleOnDrop(e, "video")}
       onClick={handleOnClick}
       className={clsx(
         "p-[2px] w-full m-[5px] relative text-[16px] transition-all flex items-center justify-center",

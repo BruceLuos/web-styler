@@ -3,6 +3,14 @@ import { EditorBtns } from "@/lib/constants";
 import { EditorAction } from "./editor-actions";
 import { Dispatch, createContext, useContext, useReducer } from "react";
 import { FunnelPage } from "@prisma/client";
+import {
+  findElement,
+  findElementIndex,
+  findAndSwapElements,
+  findAndSwapElementss_,
+  findAndSwapElements1,
+  findElementById,
+} from "@/app/(main)/subaccount/[subaccountId]/funnels/[funnelId]/editor/utils";
 
 /**
  * @description 设备类型 桌面 移动端 平板
@@ -361,6 +369,56 @@ const editorReducer = (
         },
       };
       return funnelPageIdState;
+    case "UPDATE_ELEMENT_INDEX":
+      const { elementId, targetIndex } = action.payload;
+      const updatedElementsWithIndex = state.editor.elements[0]
+        .content as EditorElement[];
+
+      const elementToUpdate = findElementById(
+        updatedElementsWithIndex,
+        elementId
+      );
+      console.log("elementToUpdate", elementToUpdate);
+
+      const currentElementsIndex = findElementIndex(
+        updatedElementsWithIndex,
+        elementToUpdate!
+      );
+
+      const newElements = findAndSwapElements1(
+        updatedElementsWithIndex,
+        targetIndex,
+        currentElementsIndex
+      );
+
+      console.log(
+        updatedElementsWithIndex,
+        newElements,
+        currentElementsIndex,
+        targetIndex
+      );
+
+      let pastElements = [...state.editor.elements];
+      pastElements[0].content = updatedElementsWithIndex;
+
+      const updatedEditorStateWithIndex = {
+        ...state.editor,
+        elements: pastElements,
+      };
+      const updatedHistoryWithIndex = [
+        ...state.history.history.slice(0, state.history.currentIndex + 1),
+        { ...updatedEditorStateWithIndex }, // Save a copy of the updated state
+      ];
+      const updatedStateWithIndex = {
+        ...state,
+        editor: updatedEditorStateWithIndex,
+        history: {
+          ...state.history,
+          history: updatedHistoryWithIndex,
+          currentIndex: updatedHistoryWithIndex.length - 1,
+        },
+      };
+      return updatedStateWithIndex;
 
     default:
       return state;

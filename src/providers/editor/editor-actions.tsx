@@ -15,6 +15,10 @@ import { DeviceTypes, EditorElement } from "./editor-provider";
 export type EditorAction =
   | {
       type: "ADD_ELEMENT";
+      /**
+       * @containerId 容器id
+       * @elementDetails 元素详情
+       */
       payload: {
         containerId: string;
         elementDetails: EditorElement;
@@ -74,5 +78,16 @@ export type EditorAction =
       type: "SET_FUNNELPAGE_ID";
       payload: {
         funnelPageId: string;
+      };
+    }
+  | {
+      type: "UPDATE_ELEMENT_INDEX";
+      /**
+       * @elementId 当前元素id
+       * @targetIndex 当前元素的目标位置下标
+       */
+      payload: {
+        elementId: string;
+        targetIndex: number;
       };
     };

@@ -18,7 +18,7 @@ const Container = ({ element }: Props) => {
   const handleOnDrop = (e: React.DragEvent, type: string) => {
     e.stopPropagation();
     const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
-    console.log("所有drop都走这里?", componentType, type);
+    console.log("所有drop都走这里?", componentType, type, e.target);
 
     switch (componentType) {
       case "text":

@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 import { z } from "zod";
+import { findElementIndex, findElement } from "../../../../utils";
 
 type Props = {
   element: EditorElement;
@@ -28,13 +29,44 @@ const ContactFormComponent = (props: Props) => {
 
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
     if (type === null) return;
-    console.log("组件内部的拖拽事件", type);
+    console.log("contact-from组件内部的拖拽事件", type, props.element);
     e.dataTransfer.setData("componentType", type);
+
+    const currentElements = state.editor.elements[0].content as EditorElement[];
+    // const currentElementsIndex = currentElements.indexOf(props.element);
+    const currentElementsIndex = findElementIndex(currentElements, props.element);
+    const currentElement = findElement(currentElements, currentElementsIndex)
+    e.dataTransfer.setData("dragElementIndex", currentElementsIndex.toString());
+    console.log(currentElements, currentElementsIndex,currentElement);
   };
+
 
   const handleOnDrop = (e: React.DragEvent, type: EditorBtns) => {
     e.stopPropagation();
-    console.log("组件内部的拖拽放下事件", type);
+    console.log(
+      "contact-from组件内部的拖拽放下事件",
+      type,
+      "编辑器数据",
+      state
+    );
+    const currentElements = state.editor.elements[0].content as EditorElement[];
+    // const currentElementsIndex = currentElements.indexOf(props.element);
+    const currentElementsIndex = findElementIndex(currentElements, props.element);
+    let currentElement = findElement(currentElements, currentElementsIndex)
+
+    console.log(currentElements, currentElementsIndex);
+    console.log("dragElementIdx", e.dataTransfer.getData("dragElementIndex"));
+    const dragElementIndex = parseInt(
+      e.dataTransfer.getData("dragElementIndex")
+    );
+
+    // dispatch({
+    //   type: "UPDATE_ELEMENT_INDEX",
+    //   payload: {
+    //     elementId: props.element.id,
+    //     targetIndex: dragElementIndex,
+    //   },
+    // });
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -110,8 +142,8 @@ const ContactFormComponent = (props: Props) => {
       style={styles}
       draggable
       onDragStart={(e) => handleDragStart(e, "contactForm")}
-      // onDragOver={handleDragOver}
-      // onDrop={(e) => handleOnDrop(e, "contactForm")}
+      onDragOver={handleDragOver}
+      onDrop={(e) => handleOnDrop(e, "contactForm")}
       onClick={handleOnClickBody}
       className={clsx(
         "p-[2px] w-full m-[5px] relative text-[16px] transition-all flex items-center justify-center",
