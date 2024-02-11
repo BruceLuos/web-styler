@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { FocusEventHandler, useEffect } from "react";
+import React, { FocusEventHandler, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 type Props = {
@@ -41,6 +41,7 @@ const FunnelEditorNavigation = ({
 }: Props) => {
   const router = useRouter();
   const { state, dispatch } = useEditor();
+  const [isEdited, setIsEdited] = useState(false);
 
   // 切换不同page
   useEffect(() => {
@@ -49,6 +50,12 @@ const FunnelEditorNavigation = ({
       payload: { funnelPageId: funnelPageDetails.id },
     });
   }, [funnelPageDetails]);
+
+  // TODO 标识elements发生变化可能要在state中添加一个isEdited字段来进行标识
+  // useEffect(() => {
+  //   console.log("发生编辑器数据变化时，保存编辑器数据");
+  //   setIsEdited(true);
+  // }, [state.editor.elements]);
 
   const handleOnBlurTitleChange: FocusEventHandler<HTMLInputElement> = async (
     event
@@ -108,6 +115,7 @@ const FunnelEditorNavigation = ({
         description: `Updated a funnel page | ${response?.name}`,
         subaccountId: subaccountId,
       });
+      setIsEdited(false);
       toast("Success", {
         description: "Saved Editor",
       });
@@ -235,7 +243,15 @@ const FunnelEditorNavigation = ({
               Last updated {funnelPageDetails.updatedAt.toLocaleDateString()}
             </span>
           </div>
-          <Button onClick={handleOnSave}>Save</Button>
+          <Button
+            // className={clsx({
+            //   " cursor-not-allowed hover:bg-primary": !isEdited,
+            // })}
+            // disabled={!isEdited}
+            onClick={handleOnSave}
+          >
+            Save
+          </Button>
         </aside>
       </nav>
     </TooltipProvider>
