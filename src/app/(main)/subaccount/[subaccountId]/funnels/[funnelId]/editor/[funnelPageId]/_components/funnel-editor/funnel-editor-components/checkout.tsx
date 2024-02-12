@@ -19,11 +19,13 @@ type Props = {
   element: EditorElement;
 };
 
+/** 结账组件 */
 const Checkout = (props: Props) => {
   const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor();
   const router = useRouter();
   const [clientSecret, setClientSecret] = useState("");
   const [livePrices, setLivePrices] = useState([]);
+  /** 子账号连接stripe账号的id */
   const [subAccountConnectAccId, setSubAccountConnectAccId] = useState("");
   const options = useMemo(() => ({ clientSecret }), [clientSecret]);
   const styles = props.element.styles;
@@ -44,6 +46,8 @@ const Checkout = (props: Props) => {
     if (funnelId) {
       const fetchData = async () => {
         const funnelData = await getFunnel(funnelId);
+        // funnelData有liveProducts才有livePrices
+        // FunnelSettings 配置
         setLivePrices(JSON.parse(funnelData?.liveProducts || "[]"));
       };
       fetchData();
@@ -51,7 +55,9 @@ const Checkout = (props: Props) => {
   }, [funnelId]);
 
   useEffect(() => {
+    console.log("ff", livePrices, subaccountId, subAccountConnectAccId);
     if (livePrices.length && subaccountId && subAccountConnectAccId) {
+      // 获取stripe client secret
       const getClientSercet = async () => {
         try {
           const body = JSON.stringify({
@@ -60,7 +66,7 @@ const Checkout = (props: Props) => {
             subaccountId,
           });
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_URL}api/stripe/create-checkout-session`,
+            `${process.env.NEXT_PUBLIC_URL}/api/stripe/create-checkout-session`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -98,6 +104,7 @@ const Checkout = (props: Props) => {
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
+    console.log("element clicked", props.element);
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
       payload: {
@@ -153,7 +160,7 @@ const Checkout = (props: Props) => {
           </Badge>
         )}
 
-      <div className="border-none transition-all w-full">
+      <div className=" transition-all w-full m-4 border-dashed border-[1px] border-slate-300 ">
         <div className="flex flex-col gap-4 w-full">
           {options.clientSecret && subAccountConnectAccId && (
             <div className="text-white">
