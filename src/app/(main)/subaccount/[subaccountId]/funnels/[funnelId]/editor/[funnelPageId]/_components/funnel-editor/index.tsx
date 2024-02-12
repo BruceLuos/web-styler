@@ -7,11 +7,15 @@ import { EyeOff } from "lucide-react";
 import React, { useEffect } from "react";
 import Recursive from "./funnel-editor-components/recursive";
 
-type Props = { funnelPageId: string; liveMode?: boolean };
+type Props = {
+  funnelPageId: string;
+  /** 实时模式 */
+  liveMode?: boolean;
+};
 
 const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
   const { dispatch, state } = useEditor();
-  console.log("初始化创建网页时编辑器的数据", state.editor);
+  console.log("编辑器的数据", state.editor);
   useEffect(() => {
     if (liveMode) {
       dispatch({

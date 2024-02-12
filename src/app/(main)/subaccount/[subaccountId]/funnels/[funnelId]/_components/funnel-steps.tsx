@@ -174,6 +174,7 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
                 <CardTitle>{clickedPage?.name}</CardTitle>
                 <CardDescription className="flex flex-col gap-4">
                   <div className="border-2 rounded-lg sm:w-80 w-full  overflow-clip">
+                    {/* 进入页面编辑 */}
                     <Link
                       href={`/subaccount/${subaccountId}/funnels/${funnelId}/editor/${clickedPage?.id}`}
                       className="relative group"
@@ -186,7 +187,7 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
                         className="!text-muted-foreground absolute top-1/2 left-1/2 opacity-0 transofrm -translate-x-1/2 -translate-y-1/2 group-hover:opacity-100 transition-all duration-100"
                       />
                     </Link>
-
+                    {/* 查看实际页面效果 */}
                     <Link
                       target="_blank"
                       href={`${process.env.NEXT_PUBLIC_SCHEME}${funnel.subDomainName}.${process.env.NEXT_PUBLIC_DOMAIN}/${clickedPage?.pathName}`}
