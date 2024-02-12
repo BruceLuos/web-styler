@@ -8,7 +8,7 @@ type Props = {
 };
 
 /** 媒体资源库page */
-const MediaPage = async ({ params }: Props) => {
+const Media = async ({ params }: Props) => {
   const data = await getMedia(params.subaccountId);
 
   return (
@@ -18,4 +18,4 @@ const MediaPage = async ({ params }: Props) => {
   );
 };
 
-export default MediaPage;
+export default Media;
