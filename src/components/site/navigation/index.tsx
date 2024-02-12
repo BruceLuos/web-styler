@@ -14,7 +14,7 @@ const Navigation = ({ user }: Props) => {
     <div className="fixed top-0 right-0 left-0 p-4 flex items-center justify-between z-10">
       <aside className="flex items-center gap-2">
         <Image
-          src={'./assets/plura-logo.svg'}
+          src={'./assets/bruceluo-logo.svg'}
           width={40}
           height={40}
           alt="plur logo"
@@ -34,7 +34,7 @@ const Navigation = ({ user }: Props) => {
           href={'/agency'}
           className="bg-primary text-white p-2 px-4 rounded-md hover:bg-primary/80"
         >
-          Login Agency
+          Get In Your Agency
         </Link>
         <UserButton />
         <ModeToggle />
