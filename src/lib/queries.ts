@@ -311,6 +311,7 @@ export const getNotificationAndUser = async (agencyId: string) => {
   }
 };
 
+/** 子账号创建或更新 */
 export const upsertSubAccount = async (subAccount: SubAccount) => {
   if (!subAccount.companyEmail) return null;
   const agencyOwner = await db.user.findFirst({

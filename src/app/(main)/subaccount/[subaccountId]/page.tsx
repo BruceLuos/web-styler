@@ -61,7 +61,6 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
   const endDate = new Date(`${currentYear}-12-31T23:59:59Z`).getTime() / 1000;
 
   if (!subaccountDetails) return;
-
   /** 如果子账号已关联stripe账号 */
   if (subaccountDetails.connectAccountId) {
     const response = await stripe.accounts.retrieve({
@@ -74,57 +73,36 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
         stripeAccount: subaccountDetails.connectAccountId,
       }
     );
-    sessions = checkoutSessions.data.map(
-      (session: { created: string | number | Date; amount_total: number }) => ({
+    sessions = checkoutSessions.data.map((session) => ({
+      ...session,
+      created: new Date(session.created).toLocaleDateString(),
+      amount_total: session.amount_total ? session.amount_total / 100 : 0,
+    }));
+
+    totalClosedSessions = checkoutSessions.data
+      .filter((session) => session.status === "complete")
+      .map((session) => ({
         ...session,
         created: new Date(session.created).toLocaleDateString(),
         amount_total: session.amount_total ? session.amount_total / 100 : 0,
-      })
-    );
-
-    totalClosedSessions = checkoutSessions.data
-      .filter((session: { status: string }) => session.status === "complete")
-      .map(
-        (session: {
-          created: string | number | Date;
-          amount_total: number;
-        }) => ({
-          ...session,
-          created: new Date(session.created).toLocaleDateString(),
-          amount_total: session.amount_total ? session.amount_total / 100 : 0,
-        })
-      );
+      }));
 
     totalPendingSessions = checkoutSessions.data
       .filter(
-        (session: { status: string }) =>
-          session.status === "open" || session.status === "expired"
+        (session) => session.status === "open" || session.status === "expired"
       )
-      .map(
-        (session: {
-          created: string | number | Date;
-          amount_total: number;
-        }) => ({
-          ...session,
-          created: new Date(session.created).toLocaleDateString(),
-          amount_total: session.amount_total ? session.amount_total / 100 : 0,
-        })
-      );
+      .map((session) => ({
+        ...session,
+        created: new Date(session.created).toLocaleDateString(),
+        amount_total: session.amount_total ? session.amount_total / 100 : 0,
+      }));
 
     net = +totalClosedSessions
-      .reduce(
-        (total: any, session: { amount_total: any }) =>
-          total + (session.amount_total || 0),
-        0
-      )
+      .reduce((total, session) => total + (session.amount_total || 0), 0)
       .toFixed(2);
 
     potentialIncome = +totalPendingSessions
-      .reduce(
-        (total: any, session: { amount_total: any }) =>
-          total + (session.amount_total || 0),
-        0
-      )
+      .reduce((total, session) => total + (session.amount_total || 0), 0)
       .toFixed(2);
 
     closingRate = +(
@@ -294,47 +272,28 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                   </TableHeader>
                   <TableBody className="font-medium truncate">
                     {totalClosedSessions
-                      ? totalClosedSessions.map(
-                          (session: {
-                            id: React.Key | null | undefined;
-                            customer_details: { email: any };
-                            created: string | number | Date;
-                            amount_total:
-                              | string
-                              | number
-                              | boolean
-                              | React.ReactElement<
-                                  any,
-                                  string | React.JSXElementConstructor<any>
-                                >
-                              | Iterable<React.ReactNode>
-                              | React.ReactPortal
-                              | React.PromiseLikeOfReactNode
-                              | null
-                              | undefined;
-                          }) => (
-                            <TableRow key={session.id}>
-                              <TableCell>
-                                {session.customer_details?.email || "-"}
-                              </TableCell>
-                              <TableCell>
-                                <Badge className="bg-emerald-500 dark:text-black">
-                                  Paid
-                                </Badge>
-                              </TableCell>
-                              <TableCell>
-                                {new Date(session.created).toUTCString()}
-                              </TableCell>
+                      ? totalClosedSessions.map((session) => (
+                          <TableRow key={session.id}>
+                            <TableCell>
+                              {session.customer_details?.email || "-"}
+                            </TableCell>
+                            <TableCell>
+                              <Badge className="bg-emerald-500 dark:text-black">
+                                Paid
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              {new Date(session.created).toUTCString()}
+                            </TableCell>
 
-                              <TableCell className="text-right">
-                                <small>{currency}</small>{" "}
-                                <span className="text-emerald-500">
-                                  {session.amount_total}
-                                </span>
-                              </TableCell>
-                            </TableRow>
-                          )
-                        )
+                            <TableCell className="text-right">
+                              <small>{currency}</small>{" "}
+                              <span className="text-emerald-500">
+                                {session.amount_total}
+                              </span>
+                            </TableCell>
+                          </TableRow>
+                        ))
                       : "No Data"}
                   </TableBody>
                 </Table>
