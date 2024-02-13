@@ -26,6 +26,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+// https://clerk.com/docs/custom-flows/invitations
+// https://clerk.com/docs/custom-flows/use-sign-up#usage
 /** 使用useSignUp进行邀请用户验证处理(可用可不用) */
 export default function SignUpStep() {
   const { signUp } = useSignUp();
