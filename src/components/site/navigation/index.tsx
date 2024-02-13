@@ -17,7 +17,7 @@ const Navigation = ({ user }: Props) => {
           src={'./assets/bruceluo-logo.svg'}
           width={40}
           height={40}
-          alt="plur logo"
+          alt="webstyler logo"
         />
         <span className="text-xl font-bold"> WebStyler.</span>
       </aside>

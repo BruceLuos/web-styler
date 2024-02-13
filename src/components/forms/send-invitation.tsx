@@ -30,6 +30,8 @@ import { Button } from "../ui/button";
 import Loading from "../global/loading";
 import { saveActivityLogsNotification, sendInvitation } from "@/lib/queries";
 import { useToast } from "../ui/use-toast";
+import { useModal } from "@/providers/modal-provider";
+import { useRouter } from "next/navigation";
 
 interface SendInvitationProps {
   agencyId: string;
@@ -37,6 +39,8 @@ interface SendInvitationProps {
 
 /** 发送邀请表单 */
 const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
+  const router = useRouter();
+  const { setClose } = useModal();
   const { toast } = useToast();
   const userDataSchema = z.object({
     email: z.string().email(),
@@ -64,6 +68,7 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
         title: "Success",
         description: "Created and sent invitation",
       });
+      router.refresh();
     } catch (error) {
       console.log(error);
       toast({
@@ -72,6 +77,7 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
         description: "Could not send invitation",
       });
     }
+    setClose();
   };
 
   return (

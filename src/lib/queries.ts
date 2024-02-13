@@ -481,20 +481,30 @@ export const getUser = async (id: string) => {
   return user;
 };
 
+/** 删除之前邀请数据 */
+const deleteExistingInvitations = async (agencyId: string, email: string) => {
+  const deletedInvitations = await db.invitation.deleteMany({
+    where: { agencyId, email },
+  });
+  return deletedInvitations;
+};
+
 /** 发送邀请 */
 export const sendInvitation = async (
   role: Role,
   email: string,
   agencyId: string
 ) => {
-  const resposne = await db.invitation.create({
+  // const deleteResponse = await deleteExistingInvitations(agencyId, email);
+  // console.log("deleteResponse", deleteResponse);
+  const response = await db.invitation.create({
     data: { email, agencyId, role },
   });
 
   try {
     const invitation = await clerkClient.invitations.createInvitation({
       emailAddress: email,
-      redirectUrl: process.env.NEXT_PUBLIC_URL,
+      redirectUrl: process.env.NEXT_INVITATION_REDIRECT_URL,
       publicMetadata: {
         throughInvitation: true,
         role,
@@ -505,7 +515,7 @@ export const sendInvitation = async (
     throw error;
   }
 
-  return resposne;
+  return response;
 };
 
 export const getMedia = async (subaccountId: string) => {
