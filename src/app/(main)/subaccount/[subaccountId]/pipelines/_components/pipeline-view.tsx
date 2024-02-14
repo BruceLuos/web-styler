@@ -39,6 +39,7 @@ const PipelineView = ({
 
   useEffect(() => {
     setAllLanes(lanes);
+    console.log('allLanes', allLanes);
   }, [lanes]);
 
   /** 所有具体任务 */

@@ -10,7 +10,7 @@ import { FunnelsForSubAccount } from "@/lib/types";
 import { useModal } from "@/providers/modal-provider";
 import { FunnelPage } from "@prisma/client";
 import { ExternalLink, ListChecks, LucideEdit } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   DragDropContext,
@@ -29,6 +29,11 @@ import {
 } from "@/components/ui/card";
 import FunnelStepCard from "./funnel-step-card";
 
+/**
+ * @funnel funnel配置项数据
+ * @pages funnel中所有页面数据
+ */
+
 type Props = {
   funnel: FunnelsForSubAccount;
   subaccountId: string;
@@ -45,6 +50,11 @@ const FunnelSteps = ({ funnel, funnelId, pages, subaccountId }: Props) => {
   const { setOpen } = useModal();
   /** 页面状态 */
   const [pagesState, setPagesState] = useState(pages);
+
+  useEffect(() => {
+    setPagesState(pages);
+  }, [pages]);
+
   /** 开始拖动 */
   const onDragStart = (event: DragStart) => {
     //current chosen page

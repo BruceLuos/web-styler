@@ -34,6 +34,7 @@ import {
 import { useRouter } from "next/navigation";
 import { v4 } from "uuid";
 import { CopyPlusIcon, Trash } from "lucide-react";
+import { useModal } from "@/providers/modal-provider";
 
 interface CreateFunnelPageProps {
   defaultData?: FunnelPage;
@@ -51,6 +52,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
 }) => {
   const { toast } = useToast();
   const router = useRouter();
+  const { setClose } = useModal();
   //ch
   const form = useForm<z.infer<typeof FunnelPageSchema>>({
     resolver: zodResolver(FunnelPageSchema),
@@ -104,6 +106,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
         description: "Could Save Funnel Page Details",
       });
     }
+    setClose();
   };
 
   return (
