@@ -51,11 +51,19 @@ const MenuOptions = ({
 }: Props) => {
   /** useModal hook is used to open and close the modal */
   const { setOpen } = useModal();
+  /** 移动端侧边栏状态 */
+  const [sheetOpen, setSheetOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+  /** 移动端默认关闭侧边栏 */
   const openState = useMemo(
-    () => (defaultOpen ? { open: true } : {}),
-    [defaultOpen]
+    () =>
+      defaultOpen
+        ? { open: true }
+        : sheetOpen
+        ? { open: true }
+        : { open: false },
+    [defaultOpen, sheetOpen]
   );
 
   useEffect(() => {
@@ -65,7 +73,7 @@ const MenuOptions = ({
   if (!isMounted) return;
 
   return (
-    <Sheet modal={false} {...openState}>
+    <Sheet modal={false} {...openState} onOpenChange={setSheetOpen}>
       <SheetTrigger
         asChild
         className="absolute left-4 top-4 z-[100] md:!hidden felx"
@@ -277,6 +285,7 @@ const MenuOptions = ({
                         <Link
                           href={sidebarOptions.link}
                           className="flex items-center gap-2 hover:bg-transparent rounded-md transition-all md:w-full w-[320px]"
+                          onClick={() => setSheetOpen(false)}
                         >
                           {val}
                           <span>{sidebarOptions.name}</span>
