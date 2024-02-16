@@ -13,6 +13,7 @@ type Props = {
   liveMode?: boolean;
 };
 
+/** 网页编辑器 */
 const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
   const { dispatch, state } = useEditor();
   console.log("编辑器的数据", state.editor);
