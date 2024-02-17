@@ -42,6 +42,8 @@ const TextComponent = (props: Props) => {
 
           "!border-solid": state.editor.selectedElement.id === props.element.id,
           "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
+          "!p-0": state.editor.liveMode, // 预览模式，不需要padding
+          "!m-0": state.editor.liveMode, // 预览模式，不需要margin
         }
       )}
       onClick={handleOnClickBody}

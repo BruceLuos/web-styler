@@ -32,7 +32,6 @@ const VideoComponent = (props: Props) => {
     console.log(currentElements, currentElementsIndex);
   };
 
-
   const handleOnDrop = (e: React.DragEvent, type: EditorBtns) => {
     e.stopPropagation();
     console.log("contact-from组件内部的拖拽放下事件", type);
@@ -96,6 +95,8 @@ const VideoComponent = (props: Props) => {
             state.editor.selectedElement.id === props.element.id,
           "!border-solid": state.editor.selectedElement.id === props.element.id,
           "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
+          "!p-0": state.editor.liveMode, // 预览模式，不需要padding
+          "!m-0": state.editor.liveMode, // 预览模式，不需要margin
         }
       )}
     >

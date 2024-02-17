@@ -34,12 +34,14 @@ const ContactFormComponent = (props: Props) => {
 
     const currentElements = state.editor.elements[0].content as EditorElement[];
     // const currentElementsIndex = currentElements.indexOf(props.element);
-    const currentElementsIndex = findElementIndex(currentElements, props.element);
-    const currentElement = findElement(currentElements, currentElementsIndex)
+    const currentElementsIndex = findElementIndex(
+      currentElements,
+      props.element
+    );
+    const currentElement = findElement(currentElements, currentElementsIndex);
     e.dataTransfer.setData("dragElementIndex", currentElementsIndex.toString());
-    console.log(currentElements, currentElementsIndex,currentElement);
+    console.log(currentElements, currentElementsIndex, currentElement);
   };
-
 
   const handleOnDrop = (e: React.DragEvent, type: EditorBtns) => {
     e.stopPropagation();
@@ -51,8 +53,11 @@ const ContactFormComponent = (props: Props) => {
     );
     const currentElements = state.editor.elements[0].content as EditorElement[];
     // const currentElementsIndex = currentElements.indexOf(props.element);
-    const currentElementsIndex = findElementIndex(currentElements, props.element);
-    let currentElement = findElement(currentElements, currentElementsIndex)
+    const currentElementsIndex = findElementIndex(
+      currentElements,
+      props.element
+    );
+    let currentElement = findElement(currentElements, currentElementsIndex);
 
     console.log(currentElements, currentElementsIndex);
     console.log("dragElementIdx", e.dataTransfer.getData("dragElementIndex"));
@@ -153,6 +158,8 @@ const ContactFormComponent = (props: Props) => {
 
           "!border-solid": state.editor.selectedElement.id === props.element.id,
           "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
+          "!p-0": state.editor.liveMode, // 预览模式，不需要padding
+          "!m-0": state.editor.liveMode, // 预览模式，不需要margin
         }
       )}
     >
