@@ -203,6 +203,8 @@ const Container = ({ element }: Props) => {
         "!border-solid":
           state.editor.selectedElement.id === id && !state.editor.liveMode,
         "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
+        "!p-0": state.editor.liveMode, // 预览模式，不需要padding
+
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
