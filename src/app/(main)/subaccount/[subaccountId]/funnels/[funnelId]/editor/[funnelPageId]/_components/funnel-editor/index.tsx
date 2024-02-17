@@ -64,7 +64,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
           "!w-[850px]": state.editor.device === "Tablet",
           "!w-[420px]": state.editor.device === "Mobile",
           "w-full": state.editor.device === "Desktop",
-          "h-[calc(100%-97px)]":
+          "!h-[calc(100%-97px)]":
             state.editor.previewMode === false &&
             state.editor.liveMode === false,
         }
