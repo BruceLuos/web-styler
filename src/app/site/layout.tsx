@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: "Welcome to my webstyler application to build your website",
   other: {
     "google-site-verification": "FDc__kEO-ZyznGalvO0FsmHH8CEbsR_W7l7M_5qBC50",
+    "robots": "noindex"
   },
 };
 
