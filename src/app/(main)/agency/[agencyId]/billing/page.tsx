@@ -42,6 +42,7 @@ const page = async ({ params }: Props) => {
       Subscription: true,
     },
   });
+  console.log('agencySubscription', agencySubscription)
 
   /** stripe 产品价格列表数据 */
   const prices = await stripe.prices.list({
@@ -71,6 +72,8 @@ const page = async ({ params }: Props) => {
       amount: `$${charge.amount / 100}`,
     })),
   ];
+
+  console.log('allChanrge',allCharges)
 
   return (
     <>
