@@ -100,3 +100,8 @@ stripe listen --forward-to localhost:3000/api/stripe/webhook
 stripe trigger payment_intent.succeeded
 
 ```
+线上测试stripe webhook监听支付事件需要用到的环境变量
+```
+# 线上测试支付时webhook监听使用,目前没有使用
+PRO_STRIPE_WEBHOOK_SECRET
+```
