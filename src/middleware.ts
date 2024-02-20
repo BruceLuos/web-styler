@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
-  publicRoutes: ["/", "/site", "/api/uploadthing"], // 校验白名单
+  publicRoutes: ["/", "/site", "/api/uploadthing","/src/middleware"], // 校验白名单
   async beforeAuth(auth, req) {
     console.log("req", req.sourcePage);
     if (req.sourcePage === '/src/middleware') {
