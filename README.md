@@ -105,3 +105,6 @@ stripe trigger payment_intent.succeeded
 # 线上测试支付时webhook监听使用,目前没有使用
 PRO_STRIPE_WEBHOOK_SECRET
 ```
+
+google search console 401 maybe reason
+https://github.com/clerk/javascript/issues/2720
