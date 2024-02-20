@@ -15,7 +15,7 @@ type Props = {
 
 /** 网页编辑器 */
 const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
-  const { dispatch, state } = useEditor();
+  const { dispatch, state, pageDetails } = useEditor();
   console.log("编辑器的数据", state.editor);
   useEffect(() => {
     if (liveMode) {
@@ -26,16 +26,26 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
     }
   }, [liveMode]);
 
-  //CHALLENGE: make this more performant
+  //CHALLENGE: make this more performant 13:31:12
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getFunnelPageDetails(funnelPageId);
-      if (!response) return;
+      // 优化：不再需要每次进入页面都重新请求数据，
+      // 之前进入funnelPageId页时已获取过一次并将数据存储到state中，所以直接可以获取pageDetails数据
+      // 提升渲染性能
 
+      const response = await getFunnelPageDetails(funnelPageId);
+      // if (!response) return;
+      // dispatch({
+      //   type: "LOAD_DATA",
+      //   payload: {
+      //     elements: response.content ? JSON.parse(response?.content) : "",
+      //     withLive: !!liveMode,
+      //   },
+      // });
       dispatch({
         type: "LOAD_DATA",
         payload: {
-          elements: response.content ? JSON.parse(response?.content) : "",
+          elements: JSON.parse(pageDetails?.content!),
           withLive: !!liveMode,
         },
       });
