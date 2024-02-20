@@ -7,7 +7,11 @@ import { NextResponse } from "next/server";
 export default authMiddleware({
   publicRoutes: ["/", "/site", "/api/uploadthing"], // 校验白名单
   async beforeAuth(auth, req) {
-    console.log('req',req)
+    console.log("req", req.sourcePage);
+    if (req.sourcePage === '/src/middleware') {
+      console.log('req.sourcePage', req.sourcePage)
+      return new Response(null, { status: 200 });
+    }
     return NextResponse.next();
   },
   async afterAuth(auth, req) {
