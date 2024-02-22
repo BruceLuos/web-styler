@@ -65,6 +65,8 @@ bun add prisma @prisma/client
 bunx prisma init --datasource-provider mysql
 bunx prisma db push 
 bunx prisma generate
+bunx prisma studio // 打开内置的 GUI，用于查看和编辑数据库中的数据
+bunx prisma db pull // 将数据库中的数据同步到prisma schema中
 
 Next steps:
 1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
