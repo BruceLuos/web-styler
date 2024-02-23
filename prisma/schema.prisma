@@ -51,6 +51,7 @@ enum Icon {
   clipboardIcon
 }
 
+// 一个用户对应一个机构，对应多种权限，多条通知
 model User {
   id           String         @id @default(uuid())
   name         String
@@ -60,12 +61,12 @@ model User {
   updatedAt    DateTime       @updatedAt
   role         Role           @default(SUBACCOUNT_USER) // 用户角色
   agencyId     String?
-  Agency       Agency?        @relation(fields: [agencyId], references: [id], onDelete: Cascade) // 机构
+  Agency       Agency?        @relation(fields: [agencyId], references: [id], onDelete: Cascade) // 机构  当前字段agencyId引用Agency表中的id字段
   Permissions  Permissions[] // 权限
   Ticket       Ticket[]
   Notification Notification[] // 通知
 
-  @@index([agencyId])
+  @@index([agencyId]) // @@ model级字段属性 ,为agencyId字段添加索引，加快查询速度
 }
 
 model Permissions {
@@ -80,6 +81,7 @@ model Permissions {
   @@index([email])
 }
 
+// 一个机构对应多个子账户
 model Agency {
   id               String                @id @default(uuid())
   connectAccountId String?               @default("") // 机构关联stripe账号
@@ -103,7 +105,7 @@ model Agency {
   Invitation       Invitation[]
   Notification     Notification[]
   Subscription     Subscription?
-  AddOns           AddOns[]
+  AddOns           AddOns[]   // 附加服务
 }
 
 model SubAccount {

@@ -68,6 +68,11 @@ bunx prisma generate
 bunx prisma studio // 打开内置的 GUI，用于查看和编辑数据库中的数据
 bunx prisma db pull // 将数据库中的数据同步到prisma schema中
 
+bunx prisma migrate dev --name init  // 迁移数据库架构，并生成迁移历史记录 部分云数据库不能创建shadow database
+migrations/
+  └─ 20210313140442_init/
+    └─ migration.sql
+
 Next steps:
 1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
 2. Run ‘prisma db pull’ to turn your database schema into a Prisma schema.
