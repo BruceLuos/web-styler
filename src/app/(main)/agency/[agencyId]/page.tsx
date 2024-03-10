@@ -29,6 +29,7 @@ const Page = async ({
   params: { agencyId: string };
   searchParams: { code: string };
 }) => {
+  console.log('agencyId', params.agencyId);
   let currency = "USD";
   let sessions;
   let totalClosedSessions;
