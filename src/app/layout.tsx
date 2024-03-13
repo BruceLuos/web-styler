@@ -11,7 +11,13 @@ const font = DM_Sans({ subsets: ["latin"] });
 // 谷歌收录
 export const metadata: Metadata = {
   title: "WebStyler",
+  applicationName: "WebStyler",
+  authors: [{ name: "Bruceluo", url: "https://gitee.com/BruceLluo" }],
   description: "Welcome to my webstyler application to build your website",
+  robots: {
+    index: true,
+    follow: true,
+  },
   other: {
     "google-site-verification": "FDc__kEO-ZyznGalvO0FsmHH8CEbsR_W7l7M_5qBC50",
   },
