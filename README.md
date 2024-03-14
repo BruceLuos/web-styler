@@ -100,6 +100,7 @@ bun add @stripe/react-stripe-js
 
 stripe webhook监听支付等事件,本地测试
 https://dashboard.stripe.com/test/webhooks/create?endpoint_location=local
+注意src/app/api/stripe/webhook/route.ts里stripeWebhookEvents的事件是否支持下面stripe trigger 测试的事件
 ```
 brew install stripe/stripe-cli/stripe
 stripe login
