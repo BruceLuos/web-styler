@@ -2,6 +2,7 @@ import { stripe } from '@/lib/stripe'
 import { StripeCustomerType } from '@/lib/types'
 import { NextResponse } from 'next/server'
 
+/** 创建新顾客 */
 export async function POST(req: Request) {
   const { address, email, name, shipping }: StripeCustomerType =
     await req.json()

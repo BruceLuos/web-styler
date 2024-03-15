@@ -2,6 +2,7 @@ import { db } from '@/lib/db'
 import { stripe } from '@/lib/stripe'
 import { NextResponse } from 'next/server'
 
+/** 创建结账用的session */
 export async function POST(req: Request) {
   const {
     subAccountConnectAccId,
