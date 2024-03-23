@@ -16,6 +16,12 @@ const stripeWebhookEvents = new Set([
   'customer.subscription.deleted',
 ])
 
+/**
+ * Handles the POST request for the Stripe webhook route.
+ * 
+ * @param req - The NextRequest object representing the incoming request.
+ * @returns A NextResponse object representing the response to the request.
+ */
 export async function POST(req: NextRequest) {
   console.log('进入stripe webhook 监听')
   let stripeEvent: Stripe.Event

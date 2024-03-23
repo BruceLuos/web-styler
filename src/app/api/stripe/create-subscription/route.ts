@@ -8,7 +8,8 @@ export async function POST(req: Request) {
     return new NextResponse("Customer Id or price id is missing", {
       status: 400,
     });
-
+  
+  // 查找订阅是否存在
   const subscriptionExists = await db.agency.findFirst({
     where: { customerId },
     include: { Subscription: true },
